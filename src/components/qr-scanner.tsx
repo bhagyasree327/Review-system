@@ -1,15 +1,10 @@
 "use client";
 
-import { useEffect, useRef }
-from "react";
-
-import QrScanner
-from "qr-scanner";
+import { useEffect, useRef } from "react";
+import QrScanner from "qr-scanner";
 
 type Props = {
-  onScan: (
-    result: string,
-  ) => void;
+  onScan: (result: string) => void;
 };
 
 export default function QRScanner({
@@ -29,27 +24,19 @@ export default function QRScanner({
         videoRef.current,
 
         (result) => {
-
-          onScan(
-            result.data,
-          );
+          onScan(result.data);
         },
 
         {
-          highlightScanRegion:
-            true,
-
-          highlightCodeOutline:
-            true,
+          highlightScanRegion: true,
+          highlightCodeOutline: true,
         },
       );
 
     scanner.start();
 
     return () => {
-
       scanner.stop();
-
       scanner.destroy();
     };
 
