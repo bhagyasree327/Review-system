@@ -48,7 +48,7 @@ export default async function OwnerPage() {
 
   // QR URL
 const reviewUrl =
-`http://192.168.55.105:3000/r/${business.slug}`;
+`${process.env.NEXT_PUBLIC_APP_URL}/r/${business.slug}`;
 
   // Reviews
   const reviews =
