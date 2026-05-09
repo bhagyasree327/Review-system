@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Business {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  googleUrl   String
+  createdAt   DateTime @default(now())
+
+  reviews     Review[]
+   users       User[]
+}
+
+model Review {
+  id          String   @id @default(cuid())
+
+  rating      Int
+  comment     String
+  sentiment   String
+
+  createdAt   DateTime @default(now())
+
+  businessId  String
+  business    Business @relation(fields: [businessId], references: [id])
+}
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  role          String    @default("OWNER")
+
+  createdAt     DateTime  @default(now())
+
+  businessId    String?
+  business      Business? @relation(fields: [businessId], references: [id])
+}
